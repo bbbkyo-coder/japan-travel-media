@@ -8,6 +8,8 @@ intro: |
   If you're planning a trip around food, thinking in terms of region — not just restaurant lists — will get you much further. Here are 10 regions with a genuinely distinct food identity, and what to look for in each.
 category: food
 tags: ['Japanese Food', 'Ramen', 'Sake', 'Local Cuisine']
+heroImage: /images/articles/best-food-regions-japan.webp
+heroImageAlt: Overhead view of a Japanese ramen bowl with shrimp, soft-boiled egg, and snap peas
 publishedDate: 2026-09-05
 featured: true
 draft: false

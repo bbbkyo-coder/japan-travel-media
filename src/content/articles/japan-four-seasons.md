@@ -8,6 +8,8 @@ intro: |
   There's no single "best" season to visit Japan — it depends on what you want from the trip. This guide walks through what each season actually looks and feels like, so you can match your trip to the Japan you're picturing.
 category: seasons
 tags: ['Sakura', 'Autumn Leaves', 'Japanese Seasons']
+heroImage: /images/articles/japan-four-seasons.webp
+heroImageAlt: Cherry blossoms along the Chidorigafuchi moat with the Tokyo skyline at dusk
 publishedDate: 2026-09-05
 featured: true
 draft: false

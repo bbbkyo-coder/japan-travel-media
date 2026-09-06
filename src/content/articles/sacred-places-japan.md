@@ -8,6 +8,8 @@ intro: |
   This isn't a "top shrines near Tokyo" list. It's a spread across the country, from Kyoto's temple district to a shrine that floats at high tide and a cemetery deep in a mountain forest. Use it to pick two or three that fit your route, not to rush through all ten.
 category: spiritual
 tags: ['Spiritual Japan', 'Shrines & Temples', 'Zen']
+heroImage: /images/articles/sacred-places-japan.webp
+heroImageAlt: A path lined with thousands of vermillion torii gates at Fushimi Inari Taisha in Kyoto
 publishedDate: 2026-09-05
 featured: true
 draft: false
