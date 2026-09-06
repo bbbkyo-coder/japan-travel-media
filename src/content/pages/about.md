@@ -8,6 +8,10 @@ We started this site around a simple idea: most Japan travel guides are organize
 
 So instead of another "Tokyo Travel Guide" or "3 Days in Kyoto" itinerary, we organize everything here by interest first. Pick what you care about, and we'll point you toward the regions, towns, and experiences in Japan that match it — from the well-known to the overlooked.
 
+## Who's writing this
+
+This site is written from the perspective of someone born and raised in Japan — sharing the country the way a local actually experiences it, including the everyday context and manners that don't usually make it into outsider-written guides. Our [guide to Japanese culture and etiquette](/tradition/know-before-you-go-japan/) goes into this in more depth, including an honest look at what's genuinely great about traveling here, and what's more difficult than people expect.
+
 ## How we write our guides
 
 > The site is new and actively expanding. Some of the practical details below (like the exact publishing schedule and author bios) are still being finalized.

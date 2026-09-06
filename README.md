@@ -180,16 +180,10 @@ export const affiliateConfig = {
 
 ## 9. GitHubへの反映方法
 
-このプロジェクトはまだリモートリポジトリに接続されていません。初めてGitHubに上げる場合:
+GitHub連携・Cloudflareへの自動デプロイは設定済みです。
+リポジトリ: https://github.com/bbbkyo-coder/japan-travel-media
 
-```bash
-git add .
-git commit -m "Initial commit"
-```
-
-その後、GitHub上で空のリポジトリを作成し、画面の指示に従って `git remote add origin ...` と `git push` を実行してください。
-
-2回目以降、変更を反映するとき:
+変更を反映したいときは、この3行を実行するだけです（`main`ブランチへのpushで自動的にビルド・公開されます）。
 
 ```bash
 git add .
@@ -203,25 +197,14 @@ git push
 
 2026年現在、Cloudflareは新規サイトに **Cloudflare Workers**（Pagesではなく）を推奨しています。このプロジェクトはWorkers向けに設定済みです（`wrangler.jsonc`）。
 
-### 方法A: GitHub連携で自動デプロイ（おすすめ）
+**GitHub連携による自動デプロイは設定済みです。** `git push` するだけで、Cloudflareダッシュボードの「Workers & Pages → japan-travel-media → デプロイ」タブに反映が進みます（数十秒でビルド完了）。
 
-1. 上記の手順でGitHubにリポジトリをpushする。
-2. [Cloudflareダッシュボード](https://dash.cloudflare.com/) → **Workers & Pages** → **Create** → GitHubリポジトリを接続。
-3. ビルド設定:
-   - ビルドコマンド: `npm run build`
-   - デプロイ先ディレクトリ: `dist`
-4. 環境変数（Analytics等を使う場合）をCloudflareの設定画面にも入力する。
-5. 接続後は、`main` ブランチにpushするたびに自動でビルド・公開されます。
-
-### 方法B: 手元から直接デプロイ
+手元から直接デプロイしたい場合（緊急時など）:
 
 ```bash
 npm run build
-npx wrangler login
 npx wrangler deploy
 ```
-
-初回は `wrangler login` でCloudflareアカウントの認証が必要です。
 
 ### 独自ドメインの設定
 
@@ -233,26 +216,60 @@ Cloudflareダッシュボードの対象Workerの「Settings → Domains & Route
 
 ```
 src/
-├── components/       再利用可能な部品（Header, ArticleCardなど）
+├── components/       再利用可能な部品（Header, ArticleCard, Commentsなど）
 ├── config/           サイト全体の設定（カテゴリー、アフィリエイト、Etsy、サイト情報）
 ├── content/
 │   ├── articles/     記事のMarkdownファイル ← 主にここを編集
 │   └── pages/        About/Privacy Policyなど固定ページのMarkdown
 ├── content.config.ts 記事frontmatterの型定義（スキーマ）
 ├── layouts/          ページの土台となるレイアウト
-├── pages/             URL構造に対応するファイル（[category]/[slug].astro など）
+├── pages/
+│   ├── api/          コメント機能のAPI（動的、静的生成されない）
+│   ├── admin/         コメント承認画面（動的、要パスワード）
+│   └── [category]/    記事・カテゴリー一覧ページ
 ├── styles/           デザインの基本設定（色・フォントはglobal.cssのCSS変数で管理）
 └── utils/            読了時間の計算などの小さな関数
+db/
+└── schema.sql        コメント機能のデータベース定義
 ```
 
 ---
 
-## 12. 現在未実装のもの（意図的にMVP範囲外）
+## 12. コメント機能について
+
+記事の一番下に、読者がコメントを書ける欄があります。**投稿されたコメントは自動公開されず、管理者の承認後に表示されます**（スパム・不適切な投稿を防ぐため）。
+
+### 承認する方法
+
+以下のURLをブックマークしてください（`キー`の部分は実際の管理用パスワードに置き換えてください。パスワードはこのプロジェクトのセットアップ時に発行したもので、`.dev.vars`ファイル、またはCloudflareダッシュボードの Workers & Pages → japan-travel-media → 設定 → Variables and Secrets で確認・再発行できます）:
+
+```
+https://（あなたのドメイン）/admin/comments/?key=キー
+```
+
+「Pending」に未承認コメントが並ぶので、「Approve」で公開、「Delete」で削除できます。このページは検索エンジンにインデックスされないよう設定済みです。
+
+### ローカルでコメント機能ごと確認したいとき
+
+コメント機能はCloudflareのデータベース（D1）を使うため、`npm run dev`（Astro単体）では動きません。代わりに以下を使ってください。
+
+```bash
+npm run dev:worker
+```
+
+初回だけ、ローカル用データベースにテーブルを作成しておく必要があります。
+
+```bash
+npx wrangler d1 execute japan-travel-media-comments --local --file=./db/schema.sql
+```
+
+---
+
+## 13. 現在未実装のもの（意図的にMVP範囲外）
 
 - 会員登録・ログイン・決済（Etsyを販売の場として利用する前提）
 - メールマガジン機能（`NewsletterPlaceholder` コンポーネントで見た目だけ用意済み）
 - 記事内画像の自動最適化（`astro:assets`）
 - 検索機能・タグ別一覧ページ
-- 著者プロフィール表示（frontmatterでの拡張がしやすい設計にはなっています）
 
 これらは記事数やアクセスが増えてから、必要になったタイミングで追加することを想定しています。

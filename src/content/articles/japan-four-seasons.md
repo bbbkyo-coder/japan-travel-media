@@ -14,7 +14,7 @@ publishedDate: 2026-09-05
 featured: true
 draft: false
 affiliateEnabled: true
-relatedSlugs: ['sacred-places-japan', 'best-food-regions-japan']
+relatedSlugs: ['know-before-you-go-japan', 'sacred-places-japan', 'best-food-regions-japan']
 faq:
   - question: When do cherry blossoms bloom in Japan?
     answer: >-

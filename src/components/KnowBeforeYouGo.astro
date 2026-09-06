@@ -1,0 +1,71 @@
+---
+// 全記事ページ共通の誘導ブロック。「日本人目線ガイド」自体のページには表示しない
+// （ArticleLayout側でcurrentSlugが一致する場合はレンダリングしない）。
+const baseUrl = '/tradition/know-before-you-go-japan/';
+
+const links = [
+  { label: 'Everyday etiquette that makes a great impression', anchor: 'everyday-etiquette-tips-that-make-a-great-impression' },
+  { label: 'Understanding Japanese culture and social norms', anchor: 'understanding-japanese-culture-and-social-norms' },
+  { label: 'Useful Japanese phrases for travelers', anchor: 'useful-japanese-phrases-for-travelers' },
+  { label: "Honest pros and cons, from a local's perspective", anchor: 'honest-pros-and-cons-of-traveling-in-japan-from-a-locals-perspective' },
+];
+---
+
+<section class="know-before">
+  <p class="eyebrow">Written by a native of Japan</p>
+  <h2>Know Before You Go</h2>
+  <p class="know-before-intro">
+    A few things a local would want you to know before your trip — manners, culture, and a few
+    useful phrases, plus an honest take on what's genuinely great (and not so great) about
+    traveling here.
+  </p>
+  <ul class="know-before-links">
+    {links.map((link) => (
+      <li><a href={`${baseUrl}#${link.anchor}`}>{link.label}</a></li>
+    ))}
+  </ul>
+  <a href={baseUrl} class="btn btn-secondary">Read the Full Guide</a>
+</section>
+
+<style>
+  .know-before {
+    padding: var(--space-3);
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .know-before-intro {
+    color: var(--color-text-muted);
+    max-width: 60ch;
+  }
+
+  .know-before-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-3);
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .know-before-links a {
+    display: block;
+    padding: 0.6rem 0.9rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    color: var(--color-text);
+    font-size: 0.92rem;
+  }
+
+  .know-before-links a:hover {
+    border-color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  @media (min-width: 640px) {
+    .know-before-links {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

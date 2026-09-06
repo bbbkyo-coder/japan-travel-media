@@ -9,11 +9,15 @@ import DestinationCard from '../components/DestinationCard.astro';
 import RelatedArticles from '../components/RelatedArticles.astro';
 import EtsyCTA from '../components/EtsyCTA.astro';
 import AffiliateCTA from '../components/AffiliateCTA.astro';
+import KnowBeforeYouGo from '../components/KnowBeforeYouGo.astro';
+import Comments from '../components/Comments.astro';
 import { getCategory } from '../config/categories';
 import { articleUrl, categoryUrl, formatDate } from '../utils/urls';
 import { estimateReadingTime } from '../utils/readingTime';
 import { affiliateConfig, affiliateGloballyEnabled } from '../config/affiliate';
 import { etsyConfig } from '../config/etsy';
+
+const KNOW_BEFORE_YOU_GO_SLUG = 'know-before-you-go-japan';
 
 interface Props {
   entry: CollectionEntry<'articles'>;
@@ -193,8 +197,18 @@ const hasEtsyLink = Boolean(data.etsyProductUrl || etsyConfig.shopUrl);
     </div>
   )}
 
+  {entry.id !== KNOW_BEFORE_YOU_GO_SLUG && (
+    <div class="container section-tight">
+      <KnowBeforeYouGo />
+    </div>
+  )}
+
   <div class="container section">
     <RelatedArticles articles={relatedArticles} />
+  </div>
+
+  <div class="container section-tight">
+    <Comments slug={entry.id} />
   </div>
 </BaseLayout>
 

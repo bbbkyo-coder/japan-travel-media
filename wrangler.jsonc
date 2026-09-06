@@ -1,12 +1,22 @@
 {
   // Cloudflare Workers への静的サイトデプロイ設定。
-  // 2026年時点でCloudflareは新規プロジェクトにPagesではなくWorkersを推奨しており、
-  // @astrojs/cloudflare アダプターも不要（完全な静的サイトのため）。
+  // ほとんどのページは静的生成だが、コメント機能（src/pages/api/comments.ts等）だけ
+  // @astrojs/cloudflare アダプター経由でオンデマンド実行される。D1データベースを使用。
   // デプロイ手順は README.md を参照。
   "name": "japan-travel-media",
   "compatibility_date": "2026-09-05",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/admin/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "japan-travel-media-comments",
+      "database_id": "311821b5-0f98-405c-865b-76108c602d9f"
+    }
+  ]
 }

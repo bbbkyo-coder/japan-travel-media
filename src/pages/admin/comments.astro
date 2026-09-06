@@ -1,0 +1,141 @@
+---
+export const prerender = false;
+
+import { env } from 'cloudflare:workers';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { formatDate } from '../../utils/urls';
+
+const key = Astro.url.searchParams.get('key') ?? '';
+const isAuthed = Boolean(env.ADMIN_SECRET) && key === env.ADMIN_SECRET;
+
+interface CommentRow {
+  id: number;
+  article_slug: string;
+  name: string;
+  message: string;
+  approved: number;
+  created_at: string;
+}
+
+let pending: CommentRow[] = [];
+let approved: CommentRow[] = [];
+
+if (isAuthed) {
+  const db = env.DB;
+  const [pendingResult, approvedResult] = await Promise.all([
+    db.prepare('SELECT * FROM comments WHERE approved = 0 ORDER BY created_at DESC').all<CommentRow>(),
+    db.prepare('SELECT * FROM comments WHERE approved = 1 ORDER BY created_at DESC LIMIT 50').all<CommentRow>(),
+  ]);
+  pending = pendingResult.results;
+  approved = approvedResult.results;
+}
+---
+
+<BaseLayout title="Comment Moderation" description="Admin: approve or remove reader comments." path="/admin/comments/" noindex={true}>
+  <div class="container section admin-page">
+    <h1>Comment Moderation</h1>
+
+    {!isAuthed && (
+      <form class="key-form">
+        <label for="key">Admin key</label>
+        <input type="password" id="key" name="key" required />
+        <button type="submit" class="btn btn-primary">Enter</button>
+      </form>
+    )}
+
+    {isAuthed && (
+      <>
+        <section>
+          <h2>Pending ({pending.length})</h2>
+          {pending.length === 0 && <p class="muted">No comments waiting for approval.</p>}
+          {pending.map((c) => (
+            <article class="comment-row">
+              <p class="comment-meta">
+                <strong>{c.name}</strong> on <code>{c.article_slug}</code> · {formatDate(new Date(c.created_at))}
+              </p>
+              <p class="comment-message">{c.message}</p>
+              <div class="comment-actions">
+                <form method="POST" action="/api/admin/comments">
+                  <input type="hidden" name="key" value={key} />
+                  <input type="hidden" name="id" value={c.id} />
+                  <input type="hidden" name="action" value="approve" />
+                  <button type="submit" class="btn btn-primary">Approve</button>
+                </form>
+                <form method="POST" action="/api/admin/comments">
+                  <input type="hidden" name="key" value={key} />
+                  <input type="hidden" name="id" value={c.id} />
+                  <input type="hidden" name="action" value="delete" />
+                  <button type="submit" class="btn btn-secondary">Delete</button>
+                </form>
+              </div>
+            </article>
+          ))}
+        </section>
+
+        <section>
+          <h2>Recently Approved</h2>
+          {approved.length === 0 && <p class="muted">No approved comments yet.</p>}
+          {approved.map((c) => (
+            <article class="comment-row">
+              <p class="comment-meta">
+                <strong>{c.name}</strong> on <code>{c.article_slug}</code> · {formatDate(new Date(c.created_at))}
+              </p>
+              <p class="comment-message">{c.message}</p>
+              <div class="comment-actions">
+                <form method="POST" action="/api/admin/comments">
+                  <input type="hidden" name="key" value={key} />
+                  <input type="hidden" name="id" value={c.id} />
+                  <input type="hidden" name="action" value="delete" />
+                  <button type="submit" class="btn btn-secondary">Delete</button>
+                </form>
+              </div>
+            </article>
+          ))}
+        </section>
+      </>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .admin-page {
+    max-width: 720px;
+  }
+
+  .key-form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: end;
+  }
+
+  .key-form input {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius);
+  }
+
+  .muted {
+    color: var(--color-text-muted);
+  }
+
+  .comment-row {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .comment-meta {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .comment-message {
+    margin-bottom: 0.5rem;
+    white-space: pre-wrap;
+  }
+
+  .comment-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+</style>

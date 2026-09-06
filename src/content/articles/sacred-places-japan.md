@@ -14,7 +14,7 @@ publishedDate: 2026-09-05
 featured: true
 draft: false
 affiliateEnabled: true
-relatedSlugs: ['japan-four-seasons', 'best-food-regions-japan']
+relatedSlugs: ['know-before-you-go-japan', 'japan-four-seasons', 'best-food-regions-japan']
 destinations:
   - name: Fushimi Inari Taisha
     japaneseName: 伏見稲荷大社

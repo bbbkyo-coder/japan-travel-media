@@ -9,9 +9,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "dev:worker": "astro build && wrangler dev --port 4321"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^14.3.0",
     "@astrojs/sitemap": "^3.7.4",
     "astro": "^7.3.1"
   },

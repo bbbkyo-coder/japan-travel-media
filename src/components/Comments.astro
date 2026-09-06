@@ -1,0 +1,182 @@
+---
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<section class="comments" id="comments" data-slug={slug}>
+  <h2>Comments</h2>
+  <p class="comments-note">
+    Comments are reviewed before they appear — yours won't show up immediately, but we do read every one.
+  </p>
+
+  <div class="comments-list" data-comments-list>
+    <p class="comments-loading">Loading comments…</p>
+  </div>
+
+  <form class="comment-form" data-comment-form>
+    <div class="form-row">
+      <label for="comment-name">Name</label>
+      <input type="text" id="comment-name" name="name" maxlength="60" required />
+    </div>
+    <div class="form-row">
+      <label for="comment-message">Comment</label>
+      <textarea id="comment-message" name="message" maxlength="1000" rows="4" required></textarea>
+    </div>
+    <!-- ボット対策のハニーポット。人間には見えない -->
+    <div class="hp-field" aria-hidden="true">
+      <label for="comment-website">Website</label>
+      <input type="text" id="comment-website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <button type="submit" class="btn btn-primary">Post Comment</button>
+    <p class="comment-status" data-comment-status role="status"></p>
+  </form>
+</section>
+
+<style>
+  .comments {
+    max-width: var(--max-width-article);
+    margin-inline: auto;
+  }
+
+  .comments-note {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .comments-list {
+    margin: var(--space-3) 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .comment-item {
+    padding: var(--space-2);
+    background: var(--color-bg-alt);
+    border-radius: var(--radius);
+  }
+
+  .comment-item-meta {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .comment-item p {
+    margin: 0;
+  }
+
+  .comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-width: 480px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .form-row label {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .form-row input,
+  .form-row textarea {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius);
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+
+  .hp-field {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .comment-status {
+    font-size: 0.9rem;
+    min-height: 1.2em;
+  }
+</style>
+
+<script>
+  function initComments(section: HTMLElement) {
+    const slug = section.dataset.slug;
+    const listEl = section.querySelector<HTMLElement>('[data-comments-list]');
+    const form = section.querySelector<HTMLFormElement>('[data-comment-form]');
+    const statusEl = section.querySelector<HTMLElement>('[data-comment-status]');
+
+    function escapeHtml(value: string) {
+      const div = document.createElement('div');
+      div.textContent = value;
+      return div.innerHTML;
+    }
+
+    async function loadComments() {
+      if (!listEl) return;
+      try {
+        const res = await fetch(`/api/comments?slug=${encodeURIComponent(slug ?? '')}`);
+        const data = await res.json();
+        const comments = data.comments ?? [];
+        if (comments.length === 0) {
+          listEl.innerHTML = '<p class="comments-loading">No comments yet — be the first to share your experience.</p>';
+          return;
+        }
+        listEl.innerHTML = comments
+          .map(
+            (c: { name: string; message: string; created_at: string }) => `
+              <article class="comment-item">
+                <p class="comment-item-meta"><strong>${escapeHtml(c.name)}</strong></p>
+                <p>${escapeHtml(c.message)}</p>
+              </article>
+            `
+          )
+          .join('');
+      } catch {
+        listEl.innerHTML = '<p class="comments-loading">Couldn\'t load comments right now.</p>';
+      }
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!statusEl || !form) return;
+      const formData = new FormData(form);
+      const payload = {
+        slug,
+        name: String(formData.get('name') ?? ''),
+        message: String(formData.get('message') ?? ''),
+        website: String(formData.get('website') ?? ''),
+      };
+
+      statusEl.textContent = 'Posting…';
+      try {
+        const res = await fetch('/api/comments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          statusEl.textContent = data.error || 'Something went wrong. Please try again.';
+          return;
+        }
+        statusEl.textContent = 'Thanks! Your comment has been submitted and will appear after review.';
+        form.reset();
+      } catch {
+        statusEl.textContent = 'Something went wrong. Please try again.';
+      }
+    });
+
+    loadComments();
+  }
+
+  document.querySelectorAll<HTMLElement>('#comments').forEach(initComments);
+</script>

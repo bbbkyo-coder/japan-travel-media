@@ -1,0 +1,7 @@
+# このファイルをコピーして .dev.vars を作成してください（.dev.varsはGit管理外です）。
+# cp .dev.vars.example .dev.vars
+#
+# ローカルで `npm run dev:worker` を実行する際に使われる、コメント機能の
+# 管理者用パスワードです。本番環境の値とは別に、開発用の適当な文字列でOKです。
+
+ADMIN_SECRET=change-me-to-any-local-dev-password

@@ -14,7 +14,7 @@ publishedDate: 2026-09-05
 featured: true
 draft: false
 affiliateEnabled: true
-relatedSlugs: ['sacred-places-japan', 'japan-four-seasons']
+relatedSlugs: ['know-before-you-go-japan', 'sacred-places-japan', 'japan-four-seasons']
 destinations:
   - name: Osaka
     japaneseName: 大阪
