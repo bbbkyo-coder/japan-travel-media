@@ -20,6 +20,8 @@ destinations:
     japaneseName: 大阪
     prefecture: Osaka
     region: Kansai
+    image: /images/destinations/osaka.webp
+    imageAlt: A neon-lit street at night in Osaka's Dotonbori district
     whyVisit: >-
       Long nicknamed "the nation's kitchen," Osaka built its identity on trade and food, and it shows in a street food culture that's more casual and boisterous than anywhere else in Japan. This is the birthplace of takoyaki and Osaka-style okonomiyaki.
     bestFor: ['Street food', 'First-time visitors', 'Casual dining']
@@ -39,6 +41,8 @@ destinations:
     japaneseName: 北海道
     prefecture: Hokkaido
     region: Hokkaido
+    image: /images/destinations/hokkaido.webp
+    imageAlt: A colorful flower field in Hokkaido's Furano region
     whyVisit: >-
       Japan's northernmost island has cold waters, rich dairy farmland, and some of the country's best seafood as a result. It's also where miso ramen originated, in the city of Sapporo.
     bestFor: ['Seafood lovers', 'Ramen lovers', 'Summer travel (cooler climate)']
@@ -58,6 +62,8 @@ destinations:
     japaneseName: 福岡（博多）
     prefecture: Fukuoka
     region: Kyushu
+    image: /images/destinations/fukuoka.webp
+    imageAlt: People gathered around a yatai food stall at night
     whyVisit: >-
       Fukuoka's Hakata district is the birthplace of tonkotsu ramen, and the city's yatai — small open-air food stalls that set up along the streets and rivers at night — are one of the most distinctive dining experiences in Japan.
     bestFor: ['Ramen lovers', 'Nightlife dining', 'Budget-friendly food travel']
@@ -77,6 +83,8 @@ destinations:
     japaneseName: 京都
     prefecture: Kyoto
     region: Kansai
+    image: /images/destinations/kyoto.webp
+    imageAlt: Visitors walking through the Arashiyama bamboo grove in Kyoto
     whyVisit: >-
       As Japan's imperial capital for over a thousand years, Kyoto developed one of the country's most refined food traditions, centered on kaiseki multi-course dining, Buddhist vegetarian shojin ryori, and delicate obanzai home-style cooking.
     bestFor: ['Fine dining', 'Tea culture', 'Traditional cuisine']
@@ -96,6 +104,8 @@ destinations:
     japaneseName: 広島
     prefecture: Hiroshima
     region: Chugoku
+    image: /images/site/homepage-hero.webp
+    imageAlt: The floating torii gate of Itsukushima Shrine near Hiroshima
     whyVisit: >-
       Hiroshima has its own distinct style of okonomiyaki — built in layers with noodles, rather than mixed into a batter like the Osaka version — and is one of Japan's top regions for oysters.
     bestFor: ['Okonomiyaki fans', 'Oyster lovers', 'Combining with Miyajima']
@@ -115,6 +125,8 @@ destinations:
     japaneseName: 金沢
     prefecture: Ishikawa
     region: Hokuriku (Chubu)
+    image: /images/destinations/kanazawa.webp
+    imageAlt: A landscaped garden with rocks and a walking path in Kanazawa
     whyVisit: >-
       Kanazawa's position on the Sea of Japan gives it access to exceptional fresh seafood, showcased at Omicho Market, and its history as a wealthy castle town produced a refined local cuisine known as Kaga ryori.
     bestFor: ['Seafood lovers', 'Combining food with traditional crafts', 'Quieter alternative to Kansai']
@@ -134,6 +146,8 @@ destinations:
     japaneseName: 名古屋
     prefecture: Aichi
     region: Chubu (Tokai)
+    image: /images/destinations/nagoya.webp
+    imageAlt: Nagoya Castle standing against a blue sky
     whyVisit: >-
       Nagoya has a food identity distinct enough to have its own name, "Nagoya meshi," built around rich, often miso-based flavors, plus a well-known "morning service" coffee shop culture.
     bestFor: ['Miso lovers', 'Coffee shop culture', 'Off-the-main-route food travel']
@@ -153,6 +167,8 @@ destinations:
     japaneseName: 東京
     prefecture: Tokyo
     region: Kanto
+    image: /images/articles/japan-four-seasons.webp
+    imageAlt: Cherry blossoms along the Chidorigafuchi moat with the Tokyo skyline
     whyVisit: >-
       Tokyo is Japan's culinary capital in sheer scale and range, from Michelin-starred sushi counters to standing ramen bars and izakaya alleys. For years, Tokyo has consistently ranked as the city with the most Michelin-starred restaurants in the world.
     bestFor: ['Every kind of food traveler', 'Fine dining', 'Sushi']
@@ -172,6 +188,8 @@ destinations:
     japaneseName: 山梨・長野
     prefecture: Yamanashi / Nagano
     region: Chubu
+    image: /images/destinations/yamanashi-nagano.webp
+    imageAlt: A mountain peak above a green forest under blue sky in the Japan Alps
     whyVisit: >-
       This mountainous region in the shadow of Mt. Fuji and the Japan Alps is home to Japan's leading wine region (Yamanashi, centered on the Koshu grape) and Nagano's soba noodle tradition, made with locally grown buckwheat.
     bestFor: ['Wine lovers', 'Soba lovers', 'Mountain scenery']
@@ -191,6 +209,8 @@ destinations:
     japaneseName: 沖縄
     prefecture: Okinawa
     region: Okinawa
+    image: /images/destinations/okinawa.webp
+    imageAlt: A person walking along a beach in Okinawa
     whyVisit: >-
       Okinawa's cuisine developed separately from mainland Japan as the food culture of the former Ryukyu Kingdom, shaped by trade with China and Southeast Asia and a subtropical climate. Expect a noticeably different flavor profile from anywhere else on this list.
     bestFor: ['Adventurous eaters', 'Beach-and-food combination trips', 'A break from mainland Japanese cuisine']

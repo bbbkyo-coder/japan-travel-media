@@ -20,6 +20,8 @@ destinations:
     japaneseName: 伏見稲荷大社
     prefecture: Kyoto
     region: Kansai
+    image: /images/articles/sacred-places-japan.webp
+    imageAlt: A path lined with thousands of vermillion torii gates at Fushimi Inari Taisha
     whyVisit: >-
       The head shrine for Inari, the Shinto deity of rice and prosperity, is famous for the thousands of vermillion torii gates that form tunnels up the wooded slopes of Mt. Inari. It's one of the most photographed sites in Japan, but it's also a working shrine that people visit for genuine prayer.
     bestFor: ['First-time visitors', 'Photography', 'Early risers']
@@ -39,6 +41,8 @@ destinations:
     japaneseName: 清水寺
     prefecture: Kyoto
     region: Kansai
+    image: /images/destinations/kiyomizu-dera.webp
+    imageAlt: Visitors near the wooden pagoda at Kiyomizu-dera temple in Kyoto
     whyVisit: >-
       A wooden temple built into a hillside, best known for its main hall's stage, constructed without a single nail, which juts out over the slope and offers sweeping views of Kyoto. It's a UNESCO World Heritage Site and one of the city's most enduring landmarks.
     bestFor: ['First-time visitors', 'Architecture', 'Seasonal scenery']
@@ -58,6 +62,8 @@ destinations:
     japaneseName: 厳島神社
     prefecture: Hiroshima
     region: Chugoku
+    image: /images/site/homepage-hero.webp
+    imageAlt: The floating torii gate of Itsukushima Shrine on Miyajima island
     whyVisit: >-
       Built over the water on Miyajima island, Itsukushima Shrine is famous for its vermillion torii gate that appears to float at high tide. The shrine and its setting — framed by forested mountains and roaming sacred deer — have been considered sacred for over a thousand years.
     bestFor: ['Scenic travel', 'Island day trips', 'Photography']
@@ -96,6 +102,8 @@ destinations:
     japaneseName: 明治神宮
     prefecture: Tokyo
     region: Kanto
+    image: /images/categories/spiritual.webp
+    imageAlt: A large wooden torii gate along the forested approach to Meiji Jingu
     whyVisit: >-
       A forested shrine dedicated to Emperor Meiji and Empress Shoken, right next to the fashion and shopping streets of Harajuku. The 100,000-plus trees on the grounds were planted by donation from across Japan when the shrine was built, and it now feels like a forest in the middle of the city.
     bestFor: ['First-time visitors', 'Combining with city sightseeing', 'A quiet break from Tokyo']
@@ -115,6 +123,8 @@ destinations:
     japaneseName: 東大寺
     prefecture: Nara
     region: Kansai
+    image: /images/destinations/todai-ji.webp
+    imageAlt: A large Buddha statue at Todai-ji temple in Nara
     whyVisit: >-
       Home to the Great Buddha (Daibutsu), a bronze statue over 15 meters tall, housed in what is one of the world's largest wooden buildings. Todai-ji has been a center of Japanese Buddhism since the 8th century and is part of Nara's UNESCO-listed historic monuments.
     bestFor: ['History', 'Families', 'Combining with wildlife (Nara Park deer)']
@@ -134,6 +144,8 @@ destinations:
     japaneseName: 金閣寺
     prefecture: Kyoto
     region: Kansai
+    image: /images/categories/tradition.webp
+    imageAlt: Kinkaku-ji, the golden pavilion, reflected in its pond
     whyVisit: >-
       A Zen temple whose top two floors are covered in gold leaf, reflected in the pond in front of it. Originally a retirement villa for a shogun before being converted into a temple, it's one of the most recognizable images of Kyoto.
     bestFor: ['First-time visitors', 'Photography', 'Short visits']
@@ -153,6 +165,8 @@ destinations:
     japaneseName: 高野山（奥之院）
     prefecture: Wakayama
     region: Kansai
+    image: /images/destinations/koyasan.webp
+    imageAlt: A tree-lined path through the forest at Koyasan
     whyVisit: >-
       A mountaintop temple town founded over a thousand years ago as the headquarters of Shingon Buddhism. Okunoin, its vast forested cemetery, holds an estimated 200,000 graves and monuments leading to the mausoleum of the monk Kobo Daishi. Many visitors stay overnight in a temple lodging (shukubo).
     bestFor: ['Spiritual travelers', 'Slow travel', 'Overnight temple stays']
@@ -191,6 +205,8 @@ destinations:
     japaneseName: 出雲大社
     prefecture: Shimane
     region: Chugoku
+    image: /images/destinations/izumo-taisha.webp
+    imageAlt: Stone rabbit statues in front of a temple building at Izumo Taisha
     whyVisit: >-
       One of Japan's oldest and most important Shinto shrines, dedicated to Okuninushi, the deity associated with relationships and good fortune. According to tradition, all of Japan's Shinto deities gather here once a year, during the month locally called Kamiarizuki ("month with the gods") rather than Kannazuki ("month without gods") as it's known elsewhere.
     bestFor: ['Spiritual travelers', 'Those interested in Shinto tradition', 'Off-the-beaten-path itineraries']

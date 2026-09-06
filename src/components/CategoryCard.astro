@@ -9,8 +9,21 @@ const { category } = Astro.props;
 ---
 
 <a href={`/${category.slug}/`} class="category-card">
-  <div class="media-placeholder card-media" aria-hidden="true">
-    <span>{category.name}</span>
+  <div class="card-media">
+    {category.image ? (
+      <img
+        src={category.image}
+        alt={category.imageAlt ?? ''}
+        width="480"
+        height="360"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class="media-placeholder" aria-hidden="true">
+        <span>{category.name}</span>
+      </div>
+    )}
   </div>
   <div class="card-body">
     <h3>{category.homeTitle}</h3>
@@ -40,6 +53,13 @@ const { category } = Astro.props;
     aspect-ratio: 4 / 3;
     font-size: 1.1rem;
     font-weight: 600;
+    overflow: hidden;
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .card-body {
