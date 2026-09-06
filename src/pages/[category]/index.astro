@@ -1,0 +1,85 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import CategoryCard from '../../components/CategoryCard.astro';
+import { categories, getCategory } from '../../config/categories';
+import { categoryUrl } from '../../utils/urls';
+
+export async function getStaticPaths() {
+  return categories.map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const path = categoryUrl(category.slug);
+
+const allArticles = await getCollection(
+  'articles',
+  (entry) => entry.data.category === category.slug && !entry.data.draft
+);
+allArticles.sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf());
+
+const featured = allArticles.find((a) => a.data.featured) ?? allArticles[0];
+const rest = allArticles.filter((a) => a.id !== featured?.id);
+
+const relatedCategories = categories.filter((c) => c.slug !== category.slug).slice(0, 3);
+---
+
+<BaseLayout
+  title={category.homeTitle}
+  description={category.description}
+  path={path}
+  breadcrumbs={[{ name: category.name, path }]}
+>
+  <Hero eyebrow="Category" title={category.homeTitle} subtitle={category.description} />
+
+  <div class="container section-tight">
+    <Breadcrumbs items={[{ name: category.name, path }]} />
+  </div>
+
+  {featured && (
+    <div class="container section-tight">
+      <p class="eyebrow">Featured Guide</p>
+      <div class="featured-wrap">
+        <ArticleCard article={featured} />
+      </div>
+    </div>
+  )}
+
+  {rest.length > 0 && (
+    <div class="container section">
+      <div class="section-heading">
+        <h2>More {category.name} Guides</h2>
+      </div>
+      <div class="grid grid-3">
+        {rest.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </div>
+  )}
+
+  {allArticles.length === 0 && (
+    <div class="container section">
+      <p>New guides for this category are coming soon.</p>
+    </div>
+  )}
+
+  <div class="container section-tight">
+    <div class="section-heading">
+      <h2>Explore Other Ways to Experience Japan</h2>
+    </div>
+    <div class="grid grid-3">
+      {relatedCategories.map((c) => <CategoryCard category={c} />)}
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .featured-wrap {
+    max-width: 420px;
+  }
+</style>

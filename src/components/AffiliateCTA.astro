@@ -1,0 +1,28 @@
+---
+// アフィリエイトCTA。
+// URLが未設定（affiliate.tsで空文字）のkindは自動的に非表示になる。
+// 架空のリンクは絶対に出さない。
+import { affiliateConfig, affiliateGloballyEnabled, type AffiliateKind } from '../config/affiliate';
+import CTA from './CTA.astro';
+
+interface Props {
+  kind: AffiliateKind;
+  label?: string;
+  compact?: boolean;
+}
+
+const { kind, label, compact = false } = Astro.props;
+const link = affiliateConfig[kind];
+const shouldRender = affiliateGloballyEnabled && Boolean(link?.url);
+---
+
+{shouldRender && (
+  <CTA
+    heading={label || link.label}
+    body={compact ? undefined : link.description}
+    ctaLabel={link.label}
+    ctaHref={link.url}
+    variant="secondary"
+    compact={compact}
+  />
+)}

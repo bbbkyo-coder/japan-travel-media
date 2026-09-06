@@ -1,0 +1,33 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../utils/urls';
+
+interface Props {
+  title: string;
+  description?: string;
+  path: string;
+  updatedDate?: Date;
+}
+
+const { title, description = '', path, updatedDate } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} path={path}>
+  <article class="section prose page-content">
+    <h1>{title}</h1>
+    {updatedDate && <p class="updated-date">Last updated: {formatDate(updatedDate)}</p>}
+    <slot />
+  </article>
+</BaseLayout>
+
+<style>
+  .page-content {
+    padding-inline: var(--space-3);
+  }
+
+  .updated-date {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-top: -0.5rem;
+  }
+</style>

@@ -1,0 +1,228 @@
+---
+import AffiliateCTA from './AffiliateCTA.astro';
+
+interface Destination {
+  name: string;
+  japaneseName?: string;
+  prefecture?: string;
+  region?: string;
+  whyVisit?: string;
+  bestFor?: string[];
+  bestSeason?: string;
+  suggestedDuration?: string;
+  highlights?: string[];
+  localFood?: string[];
+  culturalNotes?: string;
+  travelTips?: string;
+  nearbyDestinations?: string[];
+  accommodationCtaLabel?: string;
+  experienceCtaLabel?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  destination: Destination;
+  index: number;
+  affiliateEnabled?: boolean;
+}
+
+const { destination: d, index, affiliateEnabled = true } = Astro.props;
+const locationLine = [d.prefecture, d.region].filter(Boolean).join(' · ');
+---
+
+<article class="destination-card" id={`destination-${index}`}>
+  <div class="destination-media">
+    {d.image ? (
+      <img src={d.image} alt={d.imageAlt ?? d.name} width="800" height="600" loading="lazy" decoding="async" />
+    ) : (
+      <div class="media-placeholder">
+        <span>{d.name}</span>
+      </div>
+    )}
+  </div>
+
+  <div class="destination-body">
+    <p class="destination-number">#{index}</p>
+    <h3>
+      {d.name}
+      {d.japaneseName && <span class="destination-jp">{d.japaneseName}</span>}
+    </h3>
+    {locationLine && <p class="destination-location">{locationLine}</p>}
+
+    {d.whyVisit && <p class="destination-why">{d.whyVisit}</p>}
+
+    <dl class="destination-facts">
+      {d.bestFor && d.bestFor.length > 0 && (
+        <div>
+          <dt>Best for</dt>
+          <dd>{d.bestFor.join(', ')}</dd>
+        </div>
+      )}
+      {d.bestSeason && (
+        <div>
+          <dt>Best season</dt>
+          <dd>{d.bestSeason}</dd>
+        </div>
+      )}
+      {d.suggestedDuration && (
+        <div>
+          <dt>Suggested time</dt>
+          <dd>{d.suggestedDuration}</dd>
+        </div>
+      )}
+    </dl>
+
+    {d.highlights && d.highlights.length > 0 && (
+      <div class="destination-block">
+        <h4>Highlights</h4>
+        <ul>
+          {d.highlights.map((h) => <li>{h}</li>)}
+        </ul>
+      </div>
+    )}
+
+    {d.localFood && d.localFood.length > 0 && (
+      <div class="destination-block">
+        <h4>Local food to try</h4>
+        <ul>
+          {d.localFood.map((f) => <li>{f}</li>)}
+        </ul>
+      </div>
+    )}
+
+    {d.culturalNotes && (
+      <div class="destination-block">
+        <h4>Cultural notes</h4>
+        <p>{d.culturalNotes}</p>
+      </div>
+    )}
+
+    {d.travelTips && (
+      <div class="destination-block">
+        <h4>Travel tips</h4>
+        <p>{d.travelTips}</p>
+      </div>
+    )}
+
+    {d.nearbyDestinations && d.nearbyDestinations.length > 0 && (
+      <p class="destination-nearby">
+        <strong>Nearby:</strong> {d.nearbyDestinations.join(', ')}
+      </p>
+    )}
+
+    {affiliateEnabled && (
+      <div class="destination-ctas">
+        <AffiliateCTA kind="hotels" label={d.accommodationCtaLabel} compact />
+        <AffiliateCTA kind="tours" label={d.experienceCtaLabel} compact />
+      </div>
+    )}
+  </div>
+</article>
+
+<style>
+  .destination-card {
+    display: grid;
+    grid-template-columns: minmax(0, 280px) 1fr;
+    gap: var(--space-3);
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    scroll-margin-top: 5rem;
+  }
+
+  .destination-media {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+  }
+
+  .destination-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .destination-number {
+    font-family: var(--font-heading);
+    color: var(--color-accent);
+    font-weight: 700;
+    margin: 0 0 0.2rem;
+  }
+
+  .destination-body h3 {
+    margin-bottom: 0.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+
+  .destination-jp {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  .destination-location {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .destination-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-2) 0;
+    padding: var(--space-2);
+    background: var(--color-bg-alt);
+    border-radius: var(--radius);
+  }
+
+  .destination-facts dt {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+  }
+
+  .destination-facts dd {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .destination-block {
+    margin-top: var(--space-2);
+  }
+
+  .destination-block h4 {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.3rem;
+  }
+
+  .destination-nearby {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+  }
+
+  .destination-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: var(--space-3);
+  }
+
+  @media (max-width: 640px) {
+    .destination-card {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import type { CategoryDefinition } from '../config/categories';
+
+interface Props {
+  category: CategoryDefinition;
+}
+
+const { category } = Astro.props;
+---
+
+<a href={`/${category.slug}/`} class="category-card">
+  <div class="media-placeholder card-media" aria-hidden="true">
+    <span>{category.name}</span>
+  </div>
+  <div class="card-body">
+    <h3>{category.homeTitle}</h3>
+    <p>{category.tagline}</p>
+  </div>
+</a>
+
+<style>
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    color: var(--color-text);
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .category-card:hover {
+    text-decoration: none;
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+  }
+
+  .card-media {
+    aspect-ratio: 4 / 3;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .card-body {
+    padding: var(--space-2) var(--space-3) var(--space-3);
+  }
+
+  .card-body h3 {
+    margin-bottom: 0.35rem;
+  }
+
+  .card-body p {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    margin-bottom: 0;
+  }
+</style>

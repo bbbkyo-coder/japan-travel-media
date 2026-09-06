@@ -1,0 +1,26 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  articles: CollectionEntry<'articles'>[];
+  heading?: string;
+}
+
+const { articles, heading = 'Related Guides' } = Astro.props;
+---
+
+{articles.length > 0 && (
+  <section class="related-articles">
+    <h2>{heading}</h2>
+    <div class="grid grid-3">
+      {articles.map((article) => <ArticleCard article={article} />)}
+    </div>
+  </section>
+)}
+
+<style>
+  .related-articles {
+    margin-top: var(--space-5);
+  }
+</style>

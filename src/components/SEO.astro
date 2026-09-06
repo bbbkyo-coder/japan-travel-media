@@ -1,0 +1,46 @@
+---
+import { siteConfig } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string; // 例: '/food/best-food-regions-japan/'
+  image?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+  updatedDate?: Date;
+}
+
+const { title, description, path, image, type = 'website', publishedDate, updatedDate } = Astro.props;
+
+const canonicalUrl = new URL(path, siteConfig.url).toString();
+const ogImageUrl = image ? new URL(image, siteConfig.url).toString() : undefined;
+const pageTitle = title === siteConfig.title ? title : `${title} | ${siteConfig.shortTitle}`;
+---
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:site_name" content={siteConfig.shortTitle} />
+<meta property="og:locale" content={siteConfig.locale} />
+{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+{siteConfig.twitterHandle && <meta name="twitter:site" content={siteConfig.twitterHandle} />}
+
+{type === 'article' && publishedDate && (
+  <meta property="article:published_time" content={publishedDate.toISOString()} />
+)}
+{type === 'article' && updatedDate && (
+  <meta property="article:modified_time" content={updatedDate.toISOString()} />
+)}

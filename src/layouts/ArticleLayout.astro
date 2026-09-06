@@ -1,0 +1,263 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
+import BaseLayout from './BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import DestinationCard from '../components/DestinationCard.astro';
+import RelatedArticles from '../components/RelatedArticles.astro';
+import EtsyCTA from '../components/EtsyCTA.astro';
+import AffiliateCTA from '../components/AffiliateCTA.astro';
+import { getCategory } from '../config/categories';
+import { articleUrl, categoryUrl, formatDate } from '../utils/urls';
+import { estimateReadingTime } from '../utils/readingTime';
+import { affiliateConfig, affiliateGloballyEnabled } from '../config/affiliate';
+import { etsyConfig } from '../config/etsy';
+
+interface Props {
+  entry: CollectionEntry<'articles'>;
+  // render()が返すコンポーネント。型はAstroの内部型に依存させず緩めにしておく。
+  Content: (_props: Record<string, never>) => unknown;
+  headings: MarkdownHeading[];
+  relatedArticles: CollectionEntry<'articles'>[];
+}
+
+const { entry, Content, headings, relatedArticles } = Astro.props;
+const { data } = entry;
+const category = getCategory(data.category);
+const path = articleUrl(entry);
+const readingTime = estimateReadingTime(entry.body ?? '');
+const destinations = data.destinations ?? [];
+
+// Quick comparison: 実データが存在する列だけ出す
+const hasBestFor = destinations.some((d) => d.bestFor && d.bestFor.length > 0);
+const hasBestSeason = destinations.some((d) => d.bestSeason);
+const hasDuration = destinations.some((d) => d.suggestedDuration);
+const hasLocation = destinations.some((d) => d.prefecture || d.region);
+
+// Location overview: regionごとにグルーピング
+const regionMap = new Map<string, Set<string>>();
+for (const d of destinations) {
+  const region = d.region || d.prefecture;
+  if (!region) continue;
+  if (!regionMap.has(region)) regionMap.set(region, new Set());
+  if (d.prefecture && d.prefecture !== region) regionMap.get(region)!.add(d.prefecture);
+}
+
+const introParagraphs = data.intro.split(/\n\s*\n/).map((p) => p.trim()).filter(Boolean);
+
+const hasAnyAffiliateLink =
+  affiliateGloballyEnabled && Object.values(affiliateConfig).some((link) => Boolean(link.url));
+const hasEtsyLink = Boolean(data.etsyProductUrl || etsyConfig.shopUrl);
+---
+
+<BaseLayout
+  title={data.seoTitle || data.title}
+  description={data.seoDescription || data.description}
+  path={path}
+  image={data.heroImage}
+  type="article"
+  publishedDate={data.publishedDate}
+  updatedDate={data.updatedDate}
+  breadcrumbs={[
+    ...(category ? [{ name: category.name, path: categoryUrl(category.slug) }] : []),
+    { name: data.title, path },
+  ]}
+  faq={data.faq}
+>
+  <Hero
+    size="large"
+    eyebrow={category?.name}
+    title={data.title}
+    subtitle={data.description}
+    image={data.heroImage}
+    imageAlt={data.heroImageAlt}
+  />
+
+  <div class="container section-tight">
+    <Breadcrumbs
+      items={[
+        ...(category ? [{ name: category.name, path: categoryUrl(category.slug) }] : []),
+        { name: data.title, path },
+      ]}
+    />
+
+    <div class="article-meta">
+      <span>Published {formatDate(data.publishedDate)}</span>
+      {data.updatedDate && <span>· Updated {formatDate(data.updatedDate)}</span>}
+      <span>· {readingTime}</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="prose">
+      {introParagraphs.map((p) => <p class="lede">{p}</p>)}
+    </div>
+  </div>
+
+  {destinations.length > 0 && (
+    <div class="container section-tight">
+      <div class="prose">
+        <h2 id="quick-comparison">Quick Comparison</h2>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                {hasLocation && <th>Location</th>}
+                {hasBestFor && <th>Best for</th>}
+                {hasBestSeason && <th>Best season</th>}
+                {hasDuration && <th>Time</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {destinations.map((d, i) => (
+                <tr>
+                  <td>{i + 1}</td>
+                  <td><a href={`#destination-${i + 1}`}>{d.name}</a></td>
+                  {hasLocation && <td>{[d.prefecture, d.region].filter(Boolean).join(', ')}</td>}
+                  {hasBestFor && <td>{(d.bestFor ?? []).join(', ')}</td>}
+                  {hasBestSeason && <td>{d.bestSeason}</td>}
+                  {hasDuration && <td>{d.suggestedDuration}</td>}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {regionMap.size > 0 && (
+          <>
+            <h2 id="where-these-are">Where These Are</h2>
+            <div class="region-chips">
+              {[...regionMap.entries()].map(([region, prefectures]) => (
+                <div class="region-chip">
+                  <strong>{region}</strong>
+                  {prefectures.size > 0 && <span> — {[...prefectures].join(', ')}</span>}
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )}
+
+  {destinations.length > 0 && (
+    <div class="container section-tight">
+      <div class="prose destinations-list">
+        {destinations.map((d, i) => (
+          <DestinationCard destination={d} index={i + 1} affiliateEnabled={data.affiliateEnabled} />
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div class="container section-tight">
+    <div class="prose">
+      <TableOfContents headings={headings} />
+      <Content />
+    </div>
+  </div>
+
+  {data.affiliateEnabled && hasAnyAffiliateLink && (
+    <div class="container section-tight">
+      <div class="prose plan-ctas">
+        <AffiliateCTA kind="hotels" compact />
+        <AffiliateCTA kind="transportation" compact />
+        <AffiliateCTA kind="tours" compact />
+      </div>
+    </div>
+  )}
+
+  {data.faq && data.faq.length > 0 && (
+    <div class="container section-tight">
+      <div class="prose">
+        <h2 id="faq">Frequently Asked Questions</h2>
+        {data.faq.map((item) => (
+          <details class="faq-item">
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  )}
+
+  {data.affiliateEnabled && hasEtsyLink && (
+    <div class="container section-tight">
+      <div class="prose">
+        <EtsyCTA productUrl={data.etsyProductUrl} />
+      </div>
+    </div>
+  )}
+
+  <div class="container section">
+    <RelatedArticles articles={relatedArticles} />
+  </div>
+</BaseLayout>
+
+<style>
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-top: var(--space-2);
+  }
+
+  .lede {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  .region-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: var(--space-3);
+  }
+
+  .region-chip {
+    padding: 0.5rem 0.9rem;
+    background: var(--color-indigo-soft);
+    border-radius: 999px;
+    font-size: 0.85rem;
+  }
+
+  .destinations-list > :global(article:first-child) {
+    border-top: none;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-2) 0;
+  }
+
+  .faq-item summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .faq-item p {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  .plan-ctas {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .plan-ctas {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+</style>

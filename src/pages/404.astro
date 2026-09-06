@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { categories } from '../config/categories';
+---
+
+<BaseLayout title="Page Not Found" description="The page you're looking for doesn't exist." path="/404/">
+  <div class="container section not-found">
+    <p class="eyebrow">404</p>
+    <h1>We couldn't find that page</h1>
+    <p>The page may have moved, or the link might be out of date. Try one of our categories instead:</p>
+    <ul class="not-found-links">
+      {categories.map((c) => (
+        <li><a href={`/${c.slug}/`}>{c.name}</a></li>
+      ))}
+    </ul>
+    <a href="/" class="btn btn-primary">Back to Home</a>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    text-align: center;
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .not-found-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0;
+    margin: var(--space-3) 0;
+  }
+
+  .not-found-links a {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text);
+  }
+</style>

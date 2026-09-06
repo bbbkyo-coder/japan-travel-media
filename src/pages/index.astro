@@ -1,0 +1,122 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import CategoryCard from '../components/CategoryCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import CTA from '../components/CTA.astro';
+import { categories, getCategory } from '../config/categories';
+import { siteConfig } from '../config/site';
+import { etsyConfig } from '../config/etsy';
+
+const allArticles = await getCollection('articles', (entry) => !entry.data.draft);
+const featuredArticles = allArticles
+  .filter((a) => a.data.featured)
+  .sort((a, b) => b.data.publishedDate.valueOf() - a.data.publishedDate.valueOf())
+  .slice(0, 3);
+
+const displayFeatured = featuredArticles.length > 0 ? featuredArticles : allArticles.slice(0, 3);
+
+const popularThemes = categories.flatMap((c) => c.interests.map((interest) => ({ interest, category: c })));
+
+const hiddenJapan = getCategory('hidden-japan');
+---
+
+<BaseLayout title={siteConfig.title} description={siteConfig.description} path="/">
+  <Hero size="large" title="How do you want to experience Japan?" subtitle={siteConfig.description} />
+
+  <section class="container section">
+    <div class="grid grid-3">
+      {categories.map((category) => <CategoryCard category={category} />)}
+    </div>
+  </section>
+
+  {displayFeatured.length > 0 && (
+    <section class="container section-tight">
+      <div class="section-heading">
+        <p class="eyebrow">Featured Guides</p>
+        <h2>Start Here</h2>
+      </div>
+      <div class="grid grid-3">
+        {displayFeatured.map((article) => <ArticleCard article={article} />)}
+      </div>
+    </section>
+  )}
+
+  <section class="container section-tight">
+    <div class="section-heading">
+      <p class="eyebrow">Popular Themes</p>
+      <h2>Or Start From an Idea</h2>
+    </div>
+    <div class="theme-chips">
+      {popularThemes.map(({ interest, category }) => (
+        <a href={`/${category.slug}/`} class="theme-chip">{interest}</a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container section-tight">
+    <div class="grid grid-2">
+      <div class="callout-card">
+        <p class="eyebrow">First Time in Japan?</p>
+        <h3>Start with the classics, done right</h3>
+        <p>
+          New to Japan? Our food, spiritual, and seasonal guides are built to help first-time
+          visitors plan a trip around what they actually care about — not just a checklist of
+          famous stops.
+        </p>
+        <a href="/spiritual/sacred-places-japan/" class="btn btn-secondary">See Sacred Places in Japan</a>
+      </div>
+
+      <div class="callout-card">
+        <p class="eyebrow">Beyond Tokyo &amp; Kyoto</p>
+        <h3>{hiddenJapan?.homeTitle}</h3>
+        <p>{hiddenJapan?.description}</p>
+        <a href="/hidden-japan/" class="btn btn-secondary">Discover Hidden Japan</a>
+      </div>
+    </div>
+  </section>
+
+  {etsyConfig.shopUrl && (
+    <section class="container section">
+      <CTA
+        heading="Get the Complete Guides"
+        body="Printable, offline-ready travel guides built from these free articles — made for using on the trip itself."
+        ctaLabel="Visit the Etsy Shop"
+        ctaHref={etsyConfig.shopUrl}
+      />
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .theme-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .theme-chip {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 999px;
+    color: var(--color-text);
+    font-size: 0.88rem;
+  }
+
+  .theme-chip:hover {
+    background: var(--color-bg-alt);
+    text-decoration: none;
+  }
+
+  .callout-card {
+    padding: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+  }
+
+  .callout-card p:not(.eyebrow) {
+    color: var(--color-text-muted);
+  }
+</style>

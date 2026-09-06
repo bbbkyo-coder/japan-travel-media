@@ -1,0 +1,41 @@
+---
+// 将来のメールリスト機能のためのプレースホルダー。
+// 実際のフォーム連携（ConvertKit等）が決まるまでは送信不可の見た目のみ表示する。
+// MVPでは未実装（指示書 1., 34.）。
+interface Props {
+  heading?: string;
+  body?: string;
+}
+
+const {
+  heading = 'Get trip ideas in your inbox',
+  body = "We're setting up our newsletter — check back soon to sign up for seasonal trip ideas and new guides.",
+} = Astro.props;
+---
+
+<div class="newsletter-placeholder">
+  <p class="newsletter-heading">{heading}</p>
+  <p class="newsletter-body">{body}</p>
+</div>
+
+<style>
+  .newsletter-placeholder {
+    padding: var(--space-3);
+    border: 1px dashed var(--color-border-strong);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-alt);
+    text-align: center;
+  }
+
+  .newsletter-heading {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .newsletter-body {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+</style>

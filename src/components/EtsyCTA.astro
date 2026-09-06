@@ -1,0 +1,27 @@
+---
+// Etsy誘導CTA。
+// 記事individual の etsyProductUrl か、config/etsy.ts の shopUrl のどちらかが
+// 設定されていない限り表示しない（リンク切れ・架空リンクを避けるため）。
+import { etsyConfig } from '../config/etsy';
+import CTA from './CTA.astro';
+
+interface Props {
+  productUrl?: string;
+  heading?: string;
+  body?: string;
+  ctaLabel?: string;
+}
+
+const { productUrl, heading, body, ctaLabel } = Astro.props;
+const href = productUrl || etsyConfig.shopUrl;
+---
+
+{href && (
+  <CTA
+    heading={heading || etsyConfig.defaultHeading}
+    body={body || etsyConfig.defaultBody}
+    ctaLabel={ctaLabel || etsyConfig.defaultCtaLabel}
+    ctaHref={href}
+    variant="primary"
+  />
+)}
