@@ -30,3 +30,7 @@
 | `public/images/destinations/okinawa.webp` | 沖縄のビーチ | Unsplash（URL参照） | https://unsplash.com/photos/UHgogyYReFM |
 
 未使用のまま残っている項目（Ise Jingu、Nikko Toshogu）は、テーマに合う無料写真が見つからなかったため、あえてプレースホルダー表示のままにしています。良い写真が見つかったら追加してください。
+
+| `public/images/articles/tamago-sando-comparison-japan.webp` | 卵サンドイッチ | Unsplash（URL参照） | https://unsplash.com/photos/jRLzGorL28c |
+
+卵サンド食べ比べ記事のスポット別画像（7-Eleven、Lawson、FamilyMart、Wako、喫茶店、デパ地下、コメダ）は、いずれもブランド固有の適切な無料写真が見つからなかったため、あえて設定していません（プレースホルダー表示）。
