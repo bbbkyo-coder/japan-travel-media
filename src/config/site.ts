@@ -7,9 +7,8 @@ export const siteConfig = {
   shortTitle: 'Japan by Interest',
   description:
     'Plan your trip to Japan around what you love — food, spirituality, seasons, onsen, hidden towns and living tradition.',
-  // ⚠ デプロイ前に必ず実際のドメインへ書き換えてください。
   // sitemap.xml / canonical URL / OGP に使われます。
-  url: 'https://your-domain-here.com',
+  url: 'https://japanbyinterest.com',
   locale: 'en-US',
   language: 'en',
   twitterHandle: '', // 例: '@yourhandle'（未設定なら空文字のままでOK）

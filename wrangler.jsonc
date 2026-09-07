@@ -18,5 +18,9 @@
       "database_name": "japan-travel-media-comments",
       "database_id": "311821b5-0f98-405c-865b-76108c602d9f"
     }
+  ],
+  "routes": [
+    { "pattern": "japanbyinterest.com", "custom_domain": true },
+    { "pattern": "www.japanbyinterest.com", "custom_domain": true }
   ]
 }
