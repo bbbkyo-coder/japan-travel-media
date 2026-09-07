@@ -38,7 +38,7 @@ destinations:
       A gyoza specialist near GRILL Ranman with a genuinely simple menu — pan-fried gyoza, and drinks — that's built a strong local following over decades.
     bestFor: ['Gyoza', 'A beer after chicken nanban', 'A no-frills local spot']
     highlights:
-      - A single-focus menu: handmade pan-fried gyoza, nothing else
+      - 'A single-focus menu: handmade pan-fried gyoza, nothing else'
       - A distinctive texture from how the gyoza are pan-fried, crisp on one side and soft on the other
       - Popular enough to have been featured on several Japanese TV food programs over the years
     travelTips: >-
