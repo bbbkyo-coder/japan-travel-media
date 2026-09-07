@@ -34,3 +34,5 @@
 | `public/images/articles/tamago-sando-comparison-japan.webp` | 卵サンドイッチ | Unsplash（URL参照） | https://unsplash.com/photos/jRLzGorL28c |
 
 卵サンド食べ比べ記事のスポット別画像（7-Eleven、Lawson、FamilyMart、Wako、喫茶店、デパ地下、コメダ）は、いずれもブランド固有の適切な無料写真が見つからなかったため、あえて設定していません（プレースホルダー表示）。
+
+宮崎グルメガイド記事（`miyazaki-food-guide.md`）は、ヒーロー画像・スポット別画像ともに良い無料写真がまだ見つかっておらず未設定です（プレースホルダー表示）。青島や鬼の洗濯板の本人撮影の写真があれば、それを使うのが一番良い選択肢かもしれません。
