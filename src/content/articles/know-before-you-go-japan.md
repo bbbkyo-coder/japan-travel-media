@@ -14,7 +14,7 @@ publishedDate: 2026-09-07
 featured: true
 draft: false
 affiliateEnabled: true
-relatedSlugs: ['sacred-places-japan', 'best-food-regions-japan', 'japan-four-seasons']
+relatedSlugs: ['sacred-places-japan', 'best-food-regions-japan', 'japan-four-seasons', 'onsen-etiquette-guide-japan']
 faq:
   - question: Will I offend someone if I get etiquette wrong?
     answer: >-

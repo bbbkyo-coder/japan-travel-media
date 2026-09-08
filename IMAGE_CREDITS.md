@@ -36,3 +36,7 @@
 卵サンド食べ比べ記事のスポット別画像（7-Eleven、Lawson、FamilyMart、Wako、喫茶店、デパ地下、コメダ）は、いずれもブランド固有の適切な無料写真が見つからなかったため、あえて設定していません（プレースホルダー表示）。
 
 宮崎グルメガイド記事（`miyazaki-food-guide.md`）は、ヒーロー画像・スポット別画像ともに良い無料写真がまだ見つかっておらず未設定です（プレースホルダー表示）。青島や鬼の洗濯板の本人撮影の写真があれば、それを使うのが一番良い選択肢かもしれません。
+
+| `public/images/articles/best-onsen-towns-japan.webp` | 雪の中、露天風呂に浸かるニホンザル | Unsplash（URL参照） | https://unsplash.com/photos/a-monkey-in-a-hot-spring-with-snow-on-the-ground-U8ETnd1UEMs |
+
+Onsen（`onsen-etiquette-guide-japan.md`）とHidden Japan（`underrated-towns-japan.md`）、Islands（`remote-islands-japan.md`）の3記事は、新規に写真を探す代わりに既存のカテゴリー画像（`categories/onsen.webp`、`categories/hidden-japan.webp`）と地域画像（`destinations/okinawa.webp`）を流用しています。
